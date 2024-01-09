@@ -1,0 +1,430 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TrackingVaksinModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" />
+          <Property Name="role" Type="varchar" MaxLength="255" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="BPOM">
+          <Key>
+            <PropertyRef Name="id_bpom" />
+          </Key>
+          <Property Name="id_bpom" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="division" Type="varchar" MaxLength="255" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="username" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="BPOM_Log_Kedatangan_Vaksin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id_rumahsakit" Type="int" />
+          <Property Name="id_produsen" Type="int" />
+          <Property Name="no_registration" Type="varchar" MaxLength="255" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="BPOM_Log_Penggunaan_Vaksin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id_rumahsakit" Type="int" />
+          <Property Name="no_registration" Type="varchar" MaxLength="255" />
+          <Property Name="no_rek_medis" Type="varchar" MaxLength="255" />
+          <Property Name="nik" Type="varchar" MaxLength="255" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="BPOM_Vaksin">
+          <Key>
+            <PropertyRef Name="no_registration" />
+          </Key>
+          <Property Name="no_registration" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="255" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="id_produsen" Type="int" />
+          <Property Name="packaging" Type="varchar" MaxLength="255" />
+          <Property Name="total" Type="int" />
+        </EntityType>
+        <EntityType Name="Masyarakat">
+          <Key>
+            <PropertyRef Name="nik" />
+          </Key>
+          <Property Name="nik" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="address" Type="varchar" MaxLength="255" />
+          <Property Name="gender" Type="varchar" MaxLength="255" />
+          <Property Name="date_of_birth" Type="datetime" />
+          <Property Name="username" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Pasien">
+          <Key>
+            <PropertyRef Name="no_rek_medis" />
+          </Key>
+          <Property Name="no_rek_medis" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="nik" Type="varchar" MaxLength="255" />
+          <Property Name="no_registration" Type="varchar" MaxLength="255" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="isReported" Type="int" />
+          <Property Name="id_rumahsakit" Type="int" />
+        </EntityType>
+        <EntityType Name="Produsen">
+          <Key>
+            <PropertyRef Name="id_produsen" />
+          </Key>
+          <Property Name="id_produsen" Type="int" Nullable="false" />
+          <Property Name="no_license" Type="varchar" MaxLength="255" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="address" Type="varchar" MaxLength="255" />
+          <Property Name="username" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Produsen_Vaksin">
+          <Key>
+            <PropertyRef Name="no_registration" />
+          </Key>
+          <Property Name="no_registration" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="id_produsen" Type="int" />
+          <Property Name="status" Type="varchar" MaxLength="255" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="packaging" Type="varchar" MaxLength="255" />
+          <Property Name="total" Type="int" />
+        </EntityType>
+        <EntityType Name="RS_Vaksin">
+          <Key>
+            <PropertyRef Name="no_registration" />
+          </Key>
+          <Property Name="no_registration" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="id_rumahsakit" Type="int" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="ref_code" Type="varchar" MaxLength="255" />
+          <Property Name="id_produsen" Type="int" />
+          <Property Name="isReported" Type="int" />
+          <Property Name="packaging" Type="varchar" MaxLength="255" />
+          <Property Name="total" Type="int" />
+        </EntityType>
+        <EntityType Name="RumahSakit">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="no_license" Type="varchar" MaxLength="255" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="address" Type="varchar" MaxLength="255" />
+          <Property Name="username" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityContainer Name="TrackingVaksinModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BPOM" EntityType="Self.BPOM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BPOM_Log_Kedatangan_Vaksin" EntityType="Self.BPOM_Log_Kedatangan_Vaksin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BPOM_Log_Penggunaan_Vaksin" EntityType="Self.BPOM_Log_Penggunaan_Vaksin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BPOM_Vaksin" EntityType="Self.BPOM_Vaksin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Masyarakat" EntityType="Self.Masyarakat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pasien" EntityType="Self.Pasien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Produsen" EntityType="Self.Produsen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Produsen_Vaksin" EntityType="Self.Produsen_Vaksin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RS_Vaksin" EntityType="Self.RS_Vaksin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RumahSakit" EntityType="Self.RumahSakit" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TrackingVaksinModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="role" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="BPOM">
+          <Key>
+            <PropertyRef Name="id_bpom" />
+          </Key>
+          <Property Name="id_bpom" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="division" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="BPOM_Log_Kedatangan_Vaksin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id_rumahsakit" Type="Int32" />
+          <Property Name="id_produsen" Type="Int32" />
+          <Property Name="no_registration" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="BPOM_Log_Penggunaan_Vaksin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id_rumahsakit" Type="Int32" />
+          <Property Name="no_registration" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="no_rek_medis" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="nik" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="BPOM_Vaksin">
+          <Key>
+            <PropertyRef Name="no_registration" />
+          </Key>
+          <Property Name="no_registration" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="id_produsen" Type="Int32" />
+          <Property Name="packaging" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="total" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Masyarakat">
+          <Key>
+            <PropertyRef Name="nik" />
+          </Key>
+          <Property Name="nik" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="gender" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="date_of_birth" Type="DateTime" Precision="3" />
+          <Property Name="username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Pasien">
+          <Key>
+            <PropertyRef Name="no_rek_medis" />
+          </Key>
+          <Property Name="no_rek_medis" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nik" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="no_registration" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="isReported" Type="Int32" />
+          <Property Name="id_rumahsakit" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Produsen">
+          <Key>
+            <PropertyRef Name="id_produsen" />
+          </Key>
+          <Property Name="id_produsen" Type="Int32" Nullable="false" />
+          <Property Name="no_license" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Produsen_Vaksin">
+          <Key>
+            <PropertyRef Name="no_registration" />
+          </Key>
+          <Property Name="no_registration" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_produsen" Type="Int32" />
+          <Property Name="status" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="packaging" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="total" Type="Int32" />
+        </EntityType>
+        <EntityType Name="RS_Vaksin">
+          <Key>
+            <PropertyRef Name="no_registration" />
+          </Key>
+          <Property Name="no_registration" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_rumahsakit" Type="Int32" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="ref_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="id_produsen" Type="Int32" />
+          <Property Name="isReported" Type="Int32" />
+          <Property Name="packaging" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="total" Type="Int32" />
+        </EntityType>
+        <EntityType Name="RumahSakit">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="no_license" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="TrackingVaksinEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Account" EntityType="Self.Account" />
+          <EntitySet Name="BPOM" EntityType="Self.BPOM" />
+          <EntitySet Name="BPOM_Log_Kedatangan_Vaksin" EntityType="Self.BPOM_Log_Kedatangan_Vaksin" />
+          <EntitySet Name="BPOM_Log_Penggunaan_Vaksin" EntityType="Self.BPOM_Log_Penggunaan_Vaksin" />
+          <EntitySet Name="BPOM_Vaksin" EntityType="Self.BPOM_Vaksin" />
+          <EntitySet Name="Masyarakat" EntityType="Self.Masyarakat" />
+          <EntitySet Name="Pasien" EntityType="Self.Pasien" />
+          <EntitySet Name="Produsen" EntityType="Self.Produsen" />
+          <EntitySet Name="Produsen_Vaksin" EntityType="Self.Produsen_Vaksin" />
+          <EntitySet Name="RS_Vaksin" EntityType="Self.RS_Vaksin" />
+          <EntitySet Name="RumahSakit" EntityType="Self.RumahSakit" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TrackingVaksinModelStoreContainer" CdmEntityContainer="TrackingVaksinEntities">
+          <EntitySetMapping Name="Account">
+            <EntityTypeMapping TypeName="TrackingVaksinModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BPOM">
+            <EntityTypeMapping TypeName="TrackingVaksinModel.BPOM">
+              <MappingFragment StoreEntitySet="BPOM">
+                <ScalarProperty Name="id_bpom" ColumnName="id_bpom" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="division" ColumnName="division" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="username" ColumnName="username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BPOM_Log_Kedatangan_Vaksin">
+            <EntityTypeMapping TypeName="TrackingVaksinModel.BPOM_Log_Kedatangan_Vaksin">
+              <MappingFragment StoreEntitySet="BPOM_Log_Kedatangan_Vaksin">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_rumahsakit" ColumnName="id_rumahsakit" />
+                <ScalarProperty Name="id_produsen" ColumnName="id_produsen" />
+                <ScalarProperty Name="no_registration" ColumnName="no_registration" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BPOM_Log_Penggunaan_Vaksin">
+            <EntityTypeMapping TypeName="TrackingVaksinModel.BPOM_Log_Penggunaan_Vaksin">
+              <MappingFragment StoreEntitySet="BPOM_Log_Penggunaan_Vaksin">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_rumahsakit" ColumnName="id_rumahsakit" />
+                <ScalarProperty Name="no_registration" ColumnName="no_registration" />
+                <ScalarProperty Name="no_rek_medis" ColumnName="no_rek_medis" />
+                <ScalarProperty Name="nik" ColumnName="nik" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BPOM_Vaksin">
+            <EntityTypeMapping TypeName="TrackingVaksinModel.BPOM_Vaksin">
+              <MappingFragment StoreEntitySet="BPOM_Vaksin">
+                <ScalarProperty Name="no_registration" ColumnName="no_registration" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="id_produsen" ColumnName="id_produsen" />
+                <ScalarProperty Name="packaging" ColumnName="packaging" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Masyarakat">
+            <EntityTypeMapping TypeName="TrackingVaksinModel.Masyarakat">
+              <MappingFragment StoreEntitySet="Masyarakat">
+                <ScalarProperty Name="nik" ColumnName="nik" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
+                <ScalarProperty Name="username" ColumnName="username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pasien">
+            <EntityTypeMapping TypeName="TrackingVaksinModel.Pasien">
+              <MappingFragment StoreEntitySet="Pasien">
+                <ScalarProperty Name="no_rek_medis" ColumnName="no_rek_medis" />
+                <ScalarProperty Name="nik" ColumnName="nik" />
+                <ScalarProperty Name="no_registration" ColumnName="no_registration" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="isReported" ColumnName="isReported" />
+                <ScalarProperty Name="id_rumahsakit" ColumnName="id_rumahsakit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Produsen">
+            <EntityTypeMapping TypeName="TrackingVaksinModel.Produsen">
+              <MappingFragment StoreEntitySet="Produsen">
+                <ScalarProperty Name="id_produsen" ColumnName="id_produsen" />
+                <ScalarProperty Name="no_license" ColumnName="no_license" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="username" ColumnName="username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Produsen_Vaksin">
+            <EntityTypeMapping TypeName="TrackingVaksinModel.Produsen_Vaksin">
+              <MappingFragment StoreEntitySet="Produsen_Vaksin">
+                <ScalarProperty Name="no_registration" ColumnName="no_registration" />
+                <ScalarProperty Name="id_produsen" ColumnName="id_produsen" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="packaging" ColumnName="packaging" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RS_Vaksin">
+            <EntityTypeMapping TypeName="TrackingVaksinModel.RS_Vaksin">
+              <MappingFragment StoreEntitySet="RS_Vaksin">
+                <ScalarProperty Name="no_registration" ColumnName="no_registration" />
+                <ScalarProperty Name="id_rumahsakit" ColumnName="id_rumahsakit" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="ref_code" ColumnName="ref_code" />
+                <ScalarProperty Name="id_produsen" ColumnName="id_produsen" />
+                <ScalarProperty Name="isReported" ColumnName="isReported" />
+                <ScalarProperty Name="packaging" ColumnName="packaging" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RumahSakit">
+            <EntityTypeMapping TypeName="TrackingVaksinModel.RumahSakit">
+              <MappingFragment StoreEntitySet="RumahSakit">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="no_license" ColumnName="no_license" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="username" ColumnName="username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,261 @@
+﻿@model TrackingVaksinApp.Models.ListViewModel
+
+@{
+    ViewBag.Title = "AlokasiPenggunaanVaksin";
+    Layout = "~/Views/Shared/_RumahSakitLayout.cshtml";
+}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.4/dist/sweetalert2.all.min.js"></script>
+
+<h2>Tracking Vaksin - AlokasiPenggunaanVaksin</h2>
+
+<p>
+    @Html.ActionLink("Buat Alokasi baru", "TambahAlokasiVaksin", null, new { @class = "btn btn-sm btn-primary" })
+</p>
+
+<div class="card">
+    <div class="card-tools">
+        <ul class="nav nav-pills ml-auto p-1">
+            <li class="nav-item">
+                <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Belum di Lapor</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#sales-chart" data-toggle="tab">Sudah di Lapor</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card-body">
+        <div class="tab-content p-0">
+            <div class="chart tab-pane active" id="revenue-chart">
+                <h4 class="alert alert-info mt-2">Vaksin (@Model.pasiens.Where(m => m.isReported == 0).Count() Data</h4>
+                <table class="table">
+                    <tr>
+                        <th>
+                            NIK
+                        </th>
+                        <th>
+                            No Rekam Medis
+                        </th>
+                        <th>
+                            Nama Rumah Sakit
+                        </th>
+                        <th>
+                            Vaksin
+                        </th>
+                        <th>
+                            Tindakan
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model.pasiens.Where(m => m.isReported == 0))
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nik)
+                                <span class="badge"><a href="CheckNik/@item.nik" class="btn btn-sm btn-primary ml-4">Check Nik</a></span>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.no_rek_medis)
+                            </td>
+                            <td>
+                                @Model.rumahSakits.FirstOrDefault(m => m.id == item.id_rumahsakit).name.ToString()
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.no_registration)
+                            </td>
+                            <td>
+                                <button title="Lihat Detail" type="button" class="btn btn-sm btn-primary ml-4" data-toggle="modal" data-target="#exampleModal-@item.no_rek_medis">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <a href="~/RS/HomeRS/LaporPenggunaanVaksin/@Html.DisplayFor(modelItem => item.no_rek_medis)" title="Lapor Vaksin" class="btn btn-success btn-sm"><i class="fas fa-bullhorn"></i></a>
+                            </td>
+                        </tr>
+
+                        //Modal Detail
+
+                        <div class="modal fade" id="exampleModal-@item.no_rek_medis" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Detail Vaksin</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="pt-2 mr-2">
+                                            <div class="card ml-4" style="width: 25rem;">
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item"> <label for="@item.created_at">Terdaftar Pada : </label> @item.created_at</li>
+                                                    <li class="list-group-item"> <label for="@item.nik">NIK : </label> @item.nik</li>
+                                                    <li class="list-group-item"> <label for="@item.no_rek_medis">No Rekam Medis : </label> @item.no_rek_medis</li>
+                                                    <li class="list-group-item"> <label for="@item.id_rumahsakit">Nama Rumah Sakit : </label> @Model.rumahSakits.FirstOrDefault(m => m.id == item.id_rumahsakit).name.ToString()</li>
+                                                    <li class="list-group-item"> <label for="@item.isReported">Status Lapor : </label> <span class="badge badge-danger">Belum di Lapor</span></li>
+                                                    <li class="list-group-item"> <h4>Detail Vaksin</h4></li>
+                                                    <li class="list-group-item"> <label for="@item.no_registration">No Registrasi : </label> @item.no_registration</li>
+                                                    @foreach (var detailVaksin in Model.rsVaksins.Where(m => m.no_registration.Equals(item.no_registration)))
+                                                    {
+                                                        <li class="list-group-item"><label for="@detailVaksin.packaging">Kemasan : </label> @detailVaksin.packaging</li>
+                                                        <li class="list-group-item"><label for="@detailVaksin.total">Jumlah : </label> @detailVaksin.total</li>
+                                                        <li class="list-group-item"><label for="@detailVaksin.ref_code">Kode Refrensi : </label> @detailVaksin.ref_code</li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </table>
+                <p>
+                    @Html.RouteLink("Lapor Semua", "RS", new { action = "ReportAllVaccineUse" }, new { @class = "btn btn-sm btn-primary", @style = "float:left;" })
+                    <button type="button" class="btn btn-sm btn-primary ml-4" data-toggle="modal" data-target="#exampleModal">
+                        Lapor Berdasarkan Kode Ref
+                    </button>
+                </p>
+            </div>
+
+            <div class="chart tab-pane" id="sales-chart">
+                <h4 class="alert alert-info mt-2">Vaksin (@Model.pasiens.Where(m => m.isReported == 1).Count() Data</h4>
+                <table class="table">
+                    <tr>
+                        <th>
+                            NIK
+                        </th>
+                        <th>
+                            No Rekam Medis
+                        </th>
+                        <th>
+                            Nama Rumah Sakit
+                        </th>
+                        <th>
+                            Vaksin
+                        </th>
+                        <th>
+                            Tindakan
+                        </th>
+                    </tr>
+
+                    @foreach (var item2 in Model.pasiens.Where(m => m.isReported == 1))
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.nik)
+                                <span class="badge"><a href="CheckNik/@item2.nik" class="btn btn-sm btn-primary ml-4">Check Nik</a></span>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.no_rek_medis)
+                            </td>
+                            <td>
+                                @Model.rumahSakits.FirstOrDefault(m => m.id == item2.id_rumahsakit).name.ToString()
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.no_registration)
+                            </td>
+                            <td>
+                                <button title="Lihat Detail" type="button" class="btn btn-sm btn-primary ml-4" data-toggle="modal" data-target="#exampleModal-@item2.no_rek_medis">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                        //Modal Detail
+
+                        <div class="modal fade" id="exampleModal-@item2.no_rek_medis" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Detail Vaksin</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="pt-2 mr-2">
+                                            <div class="card ml-4" style="width: 25rem;">
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item"> <label for="@item2.created_at">Terdaftar Pada : </label> @item2.created_at</li>
+                                                    <li class="list-group-item"> <label for="@item2.nik">NIK : </label> @item2.nik</li>
+                                                    <li class="list-group-item"> <label for="@item2.no_rek_medis">No Rekam Medis : </label> @item2.no_rek_medis</li>
+                                                    <li class="list-group-item"> <label for="@item2.id_rumahsakit">Nama Rumah Sakit : </label> @Model.rumahSakits.FirstOrDefault(m => m.id == item2.id_rumahsakit).name.ToString()</li>
+                                                    <li class="list-group-item"> <label for="@item2.isReported">Status Lapor : </label> <span class="badge badge-success">Sudah di Lapor</span></li>
+                                                    <li class="list-group-item"> <h4>Detail Vaksin</h4></li>
+                                                    <li class="list-group-item"> <label for="@item2.no_registration">No Registrasi : </label> @item2.no_registration</li>
+                                                    @foreach (var detailVaksin in Model.rsVaksins.Where(m => m.no_registration.Equals(item2.no_registration)))
+                                                    {
+                                                        <li class="list-group-item"><label for="@detailVaksin.packaging">Kemasan : </label> @detailVaksin.packaging</li>
+                                                        <li class="list-group-item"><label for="@detailVaksin.total">Jumlah : </label> @detailVaksin.total</li>
+                                                        <li class="list-group-item"><label for="@detailVaksin.ref_code">Kode Refrensi : </label> @detailVaksin.ref_code</li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </table>
+                <p>
+                    @Html.RouteLink("Lapor Semua", "RS", new { action = "ReportAllVaccineUse" }, new { @class = "btn btn-sm btn-primary", @style = "float:left;" })
+                    <button type="button" class="btn btn-sm btn-primary ml-4" data-toggle="modal" data-target="#exampleModal">
+                        Lapor Berdasarkan Kode Ref
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Modal By Kode Ref-->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Form Laporan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pt-2 mr-2">
+                    <form class="form-inline" action="~/RS/HomeRS/ReportVaccineUseByKodeReff" method="POST">
+                        <div class="form-group mx-sm-4 mb-2">
+                            <label for="kode_ref" class="sr-only">Kode Refrensi</label>
+                            <input type="text" name="ref_code" class="form-control" id="kode_ref" placeholder="Kode Refrensi">
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2 ml-3">Lapor</button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Session["InValidNik"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'NIK Masyarakat Tidak Ditemukan!',
+            text: 'Mohon maaf , Laporan tidak dapat dibuat :(',
+            showConfirmButton: false,
+            timer: 2500
+        });
+    </script>
+    Session.Remove("InValidNik");
+}

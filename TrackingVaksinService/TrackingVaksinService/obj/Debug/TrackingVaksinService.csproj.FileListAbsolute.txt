@@ -1,0 +1,12 @@
+D:\Perkuliahan Sem 4\TEKNET\test\TrackingVaksinService\TrackingVaksinService\obj\Debug\TrackingVaksinService.csproj.AssemblyReference.cache
+D:\Perkuliahan Sem 4\TEKNET\test\TrackingVaksinService\TrackingVaksinService\obj\Debug\TrackingVaksinService.csproj.CoreCompileInputs.cache
+D:\Perkuliahan Sem 4\TEKNET\test\TrackingVaksinService\TrackingVaksinService\bin\TrackingVaksinService.dll.config
+D:\Perkuliahan Sem 4\TEKNET\test\TrackingVaksinService\TrackingVaksinService\bin\TrackingVaksinService.dll
+D:\Perkuliahan Sem 4\TEKNET\test\TrackingVaksinService\TrackingVaksinService\bin\TrackingVaksinService.pdb
+D:\Perkuliahan Sem 4\TEKNET\test\TrackingVaksinService\TrackingVaksinService\bin\EntityFramework.dll
+D:\Perkuliahan Sem 4\TEKNET\test\TrackingVaksinService\TrackingVaksinService\bin\EntityFramework.SqlServer.dll
+D:\Perkuliahan Sem 4\TEKNET\test\TrackingVaksinService\TrackingVaksinService\bin\EntityFramework.xml
+D:\Perkuliahan Sem 4\TEKNET\test\TrackingVaksinService\TrackingVaksinService\bin\EntityFramework.SqlServer.xml
+D:\Perkuliahan Sem 4\TEKNET\test\TrackingVaksinService\TrackingVaksinService\obj\Debug\TrackingVaksinService.csproj.CopyComplete
+D:\Perkuliahan Sem 4\TEKNET\test\TrackingVaksinService\TrackingVaksinService\obj\Debug\TrackingVaksinService.dll
+D:\Perkuliahan Sem 4\TEKNET\test\TrackingVaksinService\TrackingVaksinService\obj\Debug\TrackingVaksinService.pdb

@@ -1,0 +1,154 @@
+﻿@model TrackingVaksinApp.Models.ListViewModel
+
+@{
+    ViewBag.Title = "CheckLogVaccineUse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CheckLogVaccineUse</h2>
+<link rel="stylesheet" href="~/Content/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+<link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<table id="example" class="table table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                NIK
+            </th>
+            <th>
+                No Rekam Medis
+            </th>
+            <th>
+                Tanggal Lapor
+            </th>
+            <th>
+                Nama Rumah Sakit
+            </th>
+            <th>
+                No Registrasi Vaksin
+            </th>
+            <th>
+                Tindakan
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.logUses)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nik)
+                    <sup>
+                        <button title="Lihat Detail Pasien" type="button" class="text-success" data-toggle="modal" data-target="#exampleModal-@item.nik-detail">
+                            <span class="text-success">
+                                <i class="fas fa-eye"></i>
+                            </span>
+                        </button>
+                    </sup>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.no_rek_medis)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.created_at)
+                </td>
+                <td>
+                    @Model.rumahSakits.FirstOrDefault(m => m.id == item.id_rumahsakit).name.ToString()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.no_registration)
+                </td>
+                <td>
+                    <button title="Lihat Detail" type="button" class="btn btn-sm btn-primary ml-4" data-toggle="modal" data-target="#exampleModal-@item.nik">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </td>
+            </tr>
+
+            <!--Detail All by Modal-->
+            <div class="modal fade" id="exampleModal-@item.nik" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Log Penggunaan Vaksin</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="pt-2 mr-2">
+                                <div class="card ml-4" style="width: 25rem;">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"> <label for="@item.created_at">Dilapor Pada : </label> @item.created_at</li>
+                                        <li class="list-group-item"><label for="@item.id_rumahsakit">Nama Rumah Sakit : </label> @Model.rumahSakits.FirstOrDefault(m => m.id == item.id_rumahsakit).name.ToString()</li>
+                                        <h4>Detail Pasien</h4>
+                                        @foreach (var detailPasien in Model.pasiens.Where(m => m.no_rek_medis.Equals(item.no_rek_medis)))
+                                        {
+                                            <li class="list-group-item"><label for="@detailPasien.no_rek_medis">No Rekam Medis : </label> @detailPasien.no_rek_medis</li>
+                                            <li class="list-group-item"><label for="@detailPasien.nik">NIK : </label> @detailPasien.nik</li>
+                                        }
+                                        <h4>Detail Vaksin</h4>
+                                        @foreach (var detailVaksin in Model.rsVaksins.Where(m => m.no_registration.Equals(item.no_registration)))
+                                        {
+                                            <li class="list-group-item"><label for="@detailVaksin.no_registration">No Registrasi : </label> @detailVaksin.no_registration</li>
+                                            <li class="list-group-item"><label for="@detailVaksin.packaging">Kemasan : </label> @detailVaksin.packaging</li>
+                                            <li class="list-group-item"><label for="@detailVaksin.total">Jumlah : </label> @detailVaksin.total</li>
+                                            <li class="list-group-item"><label for="@detailVaksin.ref_code">Kode Refrensi : </label> @detailVaksin.ref_code</li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Detail Pasien-->
+            <div class="modal fade" id="exampleModal-@item.nik-detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Detail Pasien</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="pt-2 mr-2">
+                                <div class="card ml-4" style="width: 25rem;">
+                                    <ul class="list-group list-group-flush">
+                                        @foreach (var detailMasyarakat in Model.masyarakts.Where(m => m.nik.Equals(item.nik)))
+                                        {
+                                            DateTime tglLahir = (DateTime)detailMasyarakat.date_of_birth;
+                                            string JenisKelamin = detailMasyarakat.gender.Equals("L") ? "Laki-Laki" : "Wanita";
+                                            <li class="list-group-item"><label for="@detailMasyarakat.nik">NIK : </label> @detailMasyarakat.nik</li>
+                                            <li class="list-group-item"><label for="@detailMasyarakat.name">Nama : </label> @detailMasyarakat.name</li>
+                                            <li class="list-group-item"><label for="@detailMasyarakat.gender">Jenis Kelamin : </label> @JenisKelamin</li>
+                                            <li class="list-group-item"><label for="@tglLahir">Tanggal Lahir: </label> @tglLahir.ToString("dd MMMM yyyy")</li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </tbody>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+

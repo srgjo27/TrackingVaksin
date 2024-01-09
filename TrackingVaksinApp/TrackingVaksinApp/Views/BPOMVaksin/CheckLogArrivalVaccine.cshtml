@@ -1,0 +1,101 @@
+﻿@model TrackingVaksinApp.Models.ListViewModel
+
+@{
+    ViewBag.Title = "CheckLogArrivalVaccine";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+<h2>CheckLogArrivalVaccine</h2>
+
+<h4 class="alert alert-info">Vaksin (@Model.LogsArrivals.Count()) Data</h4>
+<table id="example" class="table table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Tanggal Lapor
+            </th>
+            <th>
+                Nama Rumah Sakit
+            </th>
+            <th>
+                Nama Produsen
+            </th>
+            <th>
+                No Registrasi
+            </th>
+            <th>
+                Tindakan
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.LogsArrivals)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.created_at)
+                </td>
+                <td>
+                    @Model.rumahSakits.FirstOrDefault(m => m.id == item.id_rumahsakit).name.ToString()
+                </td>
+                <td>
+                    @Model.produsens.FirstOrDefault(m => m.id_produsen == item.id_produsen).name.ToString()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.no_registration)
+                </td>
+                <td>
+                    <button title="Lihat Detail" type="button" class="btn btn-sm btn-primary ml-4" data-toggle="modal" data-target="#exampleModal-@item.no_registration">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </td>
+            </tr>
+
+            <div class="modal fade" id="exampleModal-@item.no_registration" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Log Kedatangan Vaksin</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="pt-2 mr-2">
+                                <div class="card ml-4" style="width: 25rem;">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"><label for="@item.created_at">Dilapor Pada : </label> @item.created_at</li>
+                                        <li class="list-group-item"><label for="@item.no_registration">No Registrasi : </label> @item.no_registration</li>
+                                        <li class="list-group-item"><label for="@item.id_produsen">Nama Produsen : </label> @Model.produsens.FirstOrDefault(m => m.id_produsen == item.id_produsen).name.ToString()</li>
+                                        <li class="list-group-item"><label for="@item.id_rumahsakit">Nama Rumah Sakit : </label> @Model.rumahSakits.FirstOrDefault(m => m.id == item.id_rumahsakit).name.ToString()</li>
+                                        <h4>Detail Vaksin</h4>
+                                        @foreach (var detailVaksin in Model.rsVaksins.Where(m => m.no_registration.Equals(item.no_registration)))
+                                        {
+                                            <li class="list-group-item"><label for="@detailVaksin.packaging">Kemasan : </label> @detailVaksin.packaging</li>
+                                            <li class="list-group-item"><label for="@detailVaksin.total">Jumlah : </label> @detailVaksin.total</li>
+                                            <li class="list-group-item"><label for="@detailVaksin.ref_code">Kode Refrensi : </label> @detailVaksin.ref_code</li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </tbody>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>

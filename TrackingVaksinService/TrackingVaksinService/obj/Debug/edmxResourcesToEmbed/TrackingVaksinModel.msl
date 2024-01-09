@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TrackingVaksinModelStoreContainer" CdmEntityContainer="TrackingVaksinEntities">
+    <EntitySetMapping Name="Account">
+      <EntityTypeMapping TypeName="TrackingVaksinModel.Account">
+        <MappingFragment StoreEntitySet="Account">
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="role" ColumnName="role" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BPOM">
+      <EntityTypeMapping TypeName="TrackingVaksinModel.BPOM">
+        <MappingFragment StoreEntitySet="BPOM">
+          <ScalarProperty Name="id_bpom" ColumnName="id_bpom" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="division" ColumnName="division" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="username" ColumnName="username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BPOM_Log_Kedatangan_Vaksin">
+      <EntityTypeMapping TypeName="TrackingVaksinModel.BPOM_Log_Kedatangan_Vaksin">
+        <MappingFragment StoreEntitySet="BPOM_Log_Kedatangan_Vaksin">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_rumahsakit" ColumnName="id_rumahsakit" />
+          <ScalarProperty Name="id_produsen" ColumnName="id_produsen" />
+          <ScalarProperty Name="no_registration" ColumnName="no_registration" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BPOM_Log_Penggunaan_Vaksin">
+      <EntityTypeMapping TypeName="TrackingVaksinModel.BPOM_Log_Penggunaan_Vaksin">
+        <MappingFragment StoreEntitySet="BPOM_Log_Penggunaan_Vaksin">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_rumahsakit" ColumnName="id_rumahsakit" />
+          <ScalarProperty Name="no_registration" ColumnName="no_registration" />
+          <ScalarProperty Name="no_rek_medis" ColumnName="no_rek_medis" />
+          <ScalarProperty Name="nik" ColumnName="nik" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BPOM_Vaksin">
+      <EntityTypeMapping TypeName="TrackingVaksinModel.BPOM_Vaksin">
+        <MappingFragment StoreEntitySet="BPOM_Vaksin">
+          <ScalarProperty Name="no_registration" ColumnName="no_registration" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="id_produsen" ColumnName="id_produsen" />
+          <ScalarProperty Name="packaging" ColumnName="packaging" />
+          <ScalarProperty Name="total" ColumnName="total" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Masyarakat">
+      <EntityTypeMapping TypeName="TrackingVaksinModel.Masyarakat">
+        <MappingFragment StoreEntitySet="Masyarakat">
+          <ScalarProperty Name="nik" ColumnName="nik" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
+          <ScalarProperty Name="username" ColumnName="username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pasien">
+      <EntityTypeMapping TypeName="TrackingVaksinModel.Pasien">
+        <MappingFragment StoreEntitySet="Pasien">
+          <ScalarProperty Name="no_rek_medis" ColumnName="no_rek_medis" />
+          <ScalarProperty Name="nik" ColumnName="nik" />
+          <ScalarProperty Name="no_registration" ColumnName="no_registration" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="isReported" ColumnName="isReported" />
+          <ScalarProperty Name="id_rumahsakit" ColumnName="id_rumahsakit" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Produsen">
+      <EntityTypeMapping TypeName="TrackingVaksinModel.Produsen">
+        <MappingFragment StoreEntitySet="Produsen">
+          <ScalarProperty Name="id_produsen" ColumnName="id_produsen" />
+          <ScalarProperty Name="no_license" ColumnName="no_license" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="username" ColumnName="username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Produsen_Vaksin">
+      <EntityTypeMapping TypeName="TrackingVaksinModel.Produsen_Vaksin">
+        <MappingFragment StoreEntitySet="Produsen_Vaksin">
+          <ScalarProperty Name="no_registration" ColumnName="no_registration" />
+          <ScalarProperty Name="id_produsen" ColumnName="id_produsen" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="packaging" ColumnName="packaging" />
+          <ScalarProperty Name="total" ColumnName="total" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RS_Vaksin">
+      <EntityTypeMapping TypeName="TrackingVaksinModel.RS_Vaksin">
+        <MappingFragment StoreEntitySet="RS_Vaksin">
+          <ScalarProperty Name="no_registration" ColumnName="no_registration" />
+          <ScalarProperty Name="id_rumahsakit" ColumnName="id_rumahsakit" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="ref_code" ColumnName="ref_code" />
+          <ScalarProperty Name="id_produsen" ColumnName="id_produsen" />
+          <ScalarProperty Name="isReported" ColumnName="isReported" />
+          <ScalarProperty Name="packaging" ColumnName="packaging" />
+          <ScalarProperty Name="total" ColumnName="total" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RumahSakit">
+      <EntityTypeMapping TypeName="TrackingVaksinModel.RumahSakit">
+        <MappingFragment StoreEntitySet="RumahSakit">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="no_license" ColumnName="no_license" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="username" ColumnName="username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

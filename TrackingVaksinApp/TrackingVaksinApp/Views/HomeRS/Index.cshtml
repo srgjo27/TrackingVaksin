@@ -1,0 +1,64 @@
+﻿@model IEnumerable<TrackingVaksinApp.BPOMServiceReference.RS_Vaksin>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_RumahSakitLayout.cshtml";
+}
+
+<h2>Tracking Vaksin - Home RS</h2>
+
+<h4 class="alert alert-info">Vaksin (@Model.Where(m => m.isReported == 1).Count()) Data</h4>
+<table class="table">
+    <tr>
+        <th>
+            Received_at
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.no_registration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.id_produsen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.id_rumahsakit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ref_code)
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+    
+    @foreach (var item in Model.Where(m => m.isReported != 0))
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.created_at)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.no_registration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_produsen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id_rumahsakit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ref_code)
+            </td>
+            <td>
+                @Html.RouteLink("Check", "RS", new { action = "CekVaksin", id = item.no_registration }, new { @class = "btn btn-sm btn-primary" })
+                @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) | *@
+                @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }) *@
+            </td>
+        </tr>
+    }
+</table>
